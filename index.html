@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ricomida - Recetas Deliciosas</title>
+
+  <!-- Google Fonts: Cabin + Lobster -->
+  <link href="./Ricomida - Recetas Deliciosas_files/css2" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link href="./Ricomida - Recetas Deliciosas_files/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark-gray: #373a3c;
+      --light-gray: #dddddd;
+      --black: #000;
+      --white: #fff;
+      --danger: #dc3545;
+      --green: #4a7c59;
+      --green-dark: #2f5438;
+      --green-light: #e8f5e9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Cabin', sans-serif;
+      color: var(--dark-gray);
+      background-color: var(--white);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar-ricomida {
+      background-color: var(--green-dark);
+    }
+    .navbar-ricomida .navbar-brand {
+      font-family: 'Lobster', cursive;
+      font-size: 2rem;
+      color: var(--white) !important;
+      letter-spacing: 1px;
+    }
+    .navbar-ricomida .nav-link {
+      color: rgba(255,255,255,0.85) !important;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    .navbar-ricomida .nav-link:hover {
+      color: var(--white) !important;
+    }
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    /* ===== HERO / CAROUSEL ===== */
+    /* Ocultar en sm y xs (visible solo desde md en adelante) */
+    #heroCarousel {
+      display: none;
+    }
+    @media (min-width: 768px) {
+      #heroCarousel {
+        display: block;
+      }
+    }
+
+    .carousel-item-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      height: 380px;
+    }
+    .carousel-item-inner img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+    }
+    .carousel-caption-custom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.65));
+      color: var(--white);
+      padding: 2rem 2rem 1.2rem;
+      text-align: left;
+    }
+    .carousel-caption-custom h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    /* ===== SECCIÓN RECETA PRINCIPAL ===== */
+    .recipe-hero {
+      background-color: var(--green-light);
+      padding: 3rem 0 2rem;
+    }
+    .recipe-hero img {
+      border-radius: 8px;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .recipe-hero h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 2.8rem;
+      color: var(--green-dark);
+      margin-bottom: 0.4rem;
+    }
+    .recipe-hero .badge-category {
+      background-color: var(--green);
+      color: var(--white);
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .recipe-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .recipe-meta span {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+    }
+    .recipe-meta strong {
+      color: var(--green-dark);
+    }
+    .btn-enviar {
+      background-color: var(--danger);
+      color: var(--white);
+      font-weight: 700;
+      border: none;
+      padding: 0.55rem 1.5rem;
+      border-radius: 4px;
+    }
+    .btn-enviar:hover {
+      background-color: #b02a37;
+      color: var(--white);
+    }
+
+    /* ===== INGREDIENTES Y PREPARACIÓN ===== */
+    .recipe-content {
+      padding: 3rem 0;
+    }
+    .section-title {
+      font-family: 'Cabin', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dark-gray);
+      border-bottom: 3px solid var(--green);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .ingredients-list {
+      list-style: none;
+      padding: 0;
+    }
+    .ingredients-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.95rem;
+    }
+    .ingredients-list li::before {
+      content: "✦ ";
+      color: var(--green);
+      font-size: 0.7rem;
+    }
+    .prep-steps {
+      counter-reset: steps;
+      list-style: none;
+      padding: 0;
+    }
+    .prep-steps li {
+      counter-increment: steps;
+      padding: 0.9rem 0 0.9rem 3.2rem;
+      border-bottom: 1px solid var(--light-gray);
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .prep-steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--green);
+      color: var(--white);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* ===== RECETAS RELACIONADAS ===== */
+    .related-section {
+      background-color: var(--green-light);
+      padding: 3rem 0;
+    }
+    .related-section h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 2rem;
+      color: var(--green-dark);
+      margin-bottom: 2rem;
+    }
+    .card-recipe {
+      border: none;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      height: 100%;
+    }
+    .card-recipe img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-recipe .card-body {
+      padding: 1.2rem;
+    }
+    .card-title-toggle {
+      font-family: 'Cabin', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--green-dark);
+      cursor: pointer;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-title-toggle:hover {
+      text-decoration: underline;
+    }
+    .card-content-toggle {
+      font-size: 0.88rem;
+      color: var(--dark-gray);
+      line-height: 1.6;
+    }
+    .card-content-toggle .badge {
+      background-color: var(--green);
+      font-size: 0.72rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--green-dark);
+      color: rgba(255,255,255,0.75);
+      padding: 2rem 0;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    footer .brand-footer {
+      font-family: 'Lobster', cursive;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-md navbar-ricomida">
+    <div class="container">
+      <a class="navbar-brand" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Ricomida</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-md-2">
+          <li class="nav-item"><a class="nav-link" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Recetas</a></li>
+          <li class="nav-item"><a class="nav-link" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Categorías</a></li>
+          <li class="nav-item"><a class="nav-link" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== CAROUSEL (oculto en xs y sm) ===== -->
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class=""></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" class="active" aria-current="true"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <!-- Carousel Item 1 -->
+      <div class="carousel-item">
+        <div class="carousel-item-inner">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1504674900247-0877df9cc836" alt="Comida 1">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1555939594-58d7cb561ad1" alt="Comida 2">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1546069901-ba9599a7e63c" alt="Comida 3">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1567620905732-2d1ec7ab7445" alt="Comida 4">
+        </div>
+        <div class="carousel-caption-custom">
+          <h2>Sabores que enamoran</h2>
+          <p class="mb-0 d-none d-lg-block">Descubre recetas únicas preparadas con ingredientes frescos y mucho amor.</p>
+        </div>
+      </div>
+
+      <!-- Carousel Item 2 -->
+      <div class="carousel-item active">
+        <div class="carousel-item-inner">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1482049016688-2d3e1b311543" alt="Receta 5">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1499028344343-cd173ffc68a9" alt="Receta 6">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1476224203421-9ac39bcb3df1" alt="Receta 7">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1540189549336-e6e99c3679fe" alt="Receta 8">
+        </div>
+        <div class="carousel-caption-custom">
+          <h2>Cocina en casa como un chef</h2>
+          <p class="mb-0 d-none d-lg-block">Recetas paso a paso para todos los niveles. ¡Fácil, rápido y delicioso!</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- ===== RECETA PRINCIPAL ===== -->
+  <section class="recipe-hero">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <img src="./Ricomida - Recetas Deliciosas_files/photo-1473093295043-cdd812d0e601" alt="Pasta al pesto con tomates cherry">
+        </div>
+        <div class="col-md-6">
+          <span class="badge-category mb-3 d-inline-block">Plato principal</span>
+          <h1>Pasta al Pesto<br>con Tomates Cherry</h1>
+          <div class="recipe-meta">
+            <span>⏱ <strong>Preparación:</strong> 15 min</span>
+            <span>🍳 <strong>Cocción:</strong> 20 min</span>
+            <span>👥 <strong>Porciones:</strong> 4</span>
+            <span>⭐ <strong>Dificultad:</strong> Fácil</span>
+          </div>
+          <p class="text-muted" style="font-size:0.95rem; line-height:1.7;">
+            Una receta italiana clásica renovada con el frescor de los tomates cherry y la intensidad
+            de un pesto casero. Perfecta para una cena entre semana sin sacrificar el sabor.
+          </p>
+          <!-- BOTÓN con Tooltip y evento click -->
+          <button id="enviarCorreo" class="btn btn-enviar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Envía esta receta a tu correo electrónico">
+            ✉ Enviar por correo
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INGREDIENTES Y PREPARACIÓN ===== -->
+  <section class="recipe-content">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- INGREDIENTES -->
+        <div class="col-md-4">
+          <h3 class="section-title" id="tituloIngredientes">INGREDIENTES</h3>
+          <ul class="ingredients-list">
+            <li>400 g de pasta (spaghetti o penne)</li>
+            <li>2 tazas de hojas de albahaca fresca</li>
+            <li>3 dientes de ajo</li>
+            <li>50 g de piñones o nueces</li>
+            <li>80 ml de aceite de oliva extra virgen</li>
+            <li>60 g de queso parmesano rallado</li>
+            <li>200 g de tomates cherry</li>
+            <li>Sal y pimienta al gusto</li>
+            <li>Jugo de ½ limón</li>
+          </ul>
+        </div>
+
+        <!-- PREPARACIÓN -->
+        <div class="col-md-8">
+          <h3 class="section-title" id="tituloPreparacion">PREPARACIÓN</h3>
+          <ol class="prep-steps">
+            <li>Cocina la pasta en abundante agua con sal siguiendo las instrucciones del paquete. Reserva ½ taza del agua de cocción antes de escurrir.</li>
+            <li>Tuesta los piñones en una sartén seca a fuego medio durante 2-3 minutos, moviendo constantemente, hasta que estén dorados. Deja enfriar.</li>
+            <li>En un procesador de alimentos, combina la albahaca, el ajo, los piñones tostados y el jugo de limón. Procesa hasta obtener una pasta.</li>
+            <li>Con el procesador en marcha, añade el aceite de oliva en forma de hilo continuo hasta lograr una salsa homogénea. Incorpora el parmesano y salpimenta.</li>
+            <li>Corta los tomates cherry por la mitad. En la sartén donde tostaste los piñones, saltéalos con un poco de aceite durante 2 minutos a fuego alto.</li>
+            <li>Mezcla la pasta escurrida con el pesto, agregando el agua de cocción reservada poco a poco hasta lograr la consistencia deseada.</li>
+            <li>Sirve inmediatamente con los tomates cherry salteados por encima y hojas de albahaca fresca. Finaliza con parmesano extra.</li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECETAS RELACIONADAS ===== -->
+  <section class="related-section">
+    <div class="container">
+      <h2>Recetas Relacionadas</h2>
+      <div class="row g-4">
+
+        <!-- Card 1 -->
+        <div class="col-sm-6 col-lg-4">
+          <div class="card card-recipe">
+            <img src="./Ricomida - Recetas Deliciosas_files/photo-1512621776951-a57141f2eefd" alt="Ensalada mediterránea">
+            <div class="card-body">
+              <p class="card-title-toggle">Ensalada Mediterránea</p>
+              <div class="card-content-toggle">
+                <span class="badge mb-2">Vegetariana</span>
+                <p>Una fresca combinación de lechugas, aceitunas, pepino, queso feta y tomates con aderezo de limón y hierbas.</p>
+                <small class="text-muted">⏱ 10 min · 🍽 2 porciones</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-sm-6 col-lg-4">
+          <div class="card card-recipe">
+            <img src="./Ricomida - Recetas Deliciosas_files/photo-1563379926898-05f4575a45d8" alt="Risotto de setas">
+            <div class="card-body">
+              <p class="card-title-toggle">Risotto de Setas</p>
+              <div class="card-content-toggle">
+                <span class="badge mb-2">Italiana</span>
+                <p>Cremoso risotto elaborado con mezcla de setas silvestres, vino blanco, mantequilla y parmesano al estilo clásico.</p>
+                <small class="text-muted">⏱ 35 min · 🍽 4 porciones</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-sm-6 col-lg-4">
+          <div class="card card-recipe">
+            <img src="./Ricomida - Recetas Deliciosas_files/photo-1563379091339-03b21ab4a4f8" alt="Pollo al limón">
+            <div class="card-body">
+              <p class="card-title-toggle">Pollo al Limón y Hierbas</p>
+              <div class="card-content-toggle">
+                <span class="badge mb-2">Pollo</span>
+                <p>Jugosas pechugas marinadas en limón, ajo y romero, asadas a la perfección. Ideal para acompañar con arroz o verduras al vapor.</p>
+                <small class="text-muted">⏱ 30 min · 🍽 4 porciones</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="brand-footer">Ricomida</div>
+      <p class="mb-1">La comunidad de amantes de la buena cocina</p>
+      <p>
+        <a href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Inicio</a> &nbsp;·&nbsp;
+        <a href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Recetas</a> &nbsp;·&nbsp;
+        <a href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Categorías</a> &nbsp;·&nbsp;
+        <a href="file:///C:/Users/USUARIO/Desktop/rico%20comida/index.html#">Contacto</a>
+      </p>
+      <p class="mt-2 mb-0" style="opacity:0.5;">© 2024 Ricomida. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ===== JQUERY (CDN) ===== -->
+  <script src="./Ricomida - Recetas Deliciosas_files/jquery-3.7.1.min.js.descarga"></script>
+
+  <!-- ===== BOOTSTRAP 5 JS (CDN) ===== -->
+  <script src="./Ricomida - Recetas Deliciosas_files/bootstrap.bundle.min.js.descarga"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      // ── 1. Inicializar Tooltips de Bootstrap (requiere jQuery/Bootstrap JS) ──
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+      tooltipTriggerList.forEach(function (el) {
+        new bootstrap.Tooltip(el);
+      });
+
+      // ── 2. EVENTO CLICK: Alerta al hacer clic en "Enviar por Correo" (selector por id) ──
+      $('#enviarCorreo').on('click', function () {
+        alert('El correo fue enviado correctamente...');
+      });
+
+      // ── 3. SELECTORES DE ETIQUETA + dblclick: Cambiar color a rojo en títulos h3 ──
+      //    Solo afecta a "INGREDIENTES" y "PREPARACIÓN" (los únicos h3.section-title)
+      $('h3').on('dblclick', function () {
+        $(this).css('color', 'red');
+      });
+
+      // ── 4. SELECTORES DE CLASE + toggle: Mostrar/ocultar contenido de cards al hacer clic en su título ──
+      $('.card-title-toggle').on('click', function () {
+        $(this).siblings('.card-content-toggle').toggle('slow');
+      });
+
+    });
+  </script>
+
+
+
+</body></html>
